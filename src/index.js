@@ -10,8 +10,6 @@ import Root from './core/Root/Root'
 
 const store = configureStore();
 
-console.time('load-app');
-
 render(
   <AppContainer>
     <Root store={store} />

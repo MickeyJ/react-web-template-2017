@@ -7,7 +7,11 @@ import Main from './Main/Main'
 const App = () => {
   return (
     <div id="app-container">
+      <h1>hello</h1>
       <Main />
+      <footer>
+        meow
+      </footer>
     </div>
   )
 };

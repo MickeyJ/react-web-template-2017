@@ -1,6 +1,6 @@
 @import '../../assets/scss/components/retainer';
 
-.home{
+.container{
 
   @include retainer(60%, 100%){
     text-align: center;
@@ -11,3 +11,12 @@
 
 }
 
+.link{
+  color: RoyalBlue;
+  transition: color 0.25s;
+
+  &:hover{
+    color: #6ab9ff;
+  }
+
+}

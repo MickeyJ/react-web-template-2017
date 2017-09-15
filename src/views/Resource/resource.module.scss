@@ -1,0 +1,13 @@
+@import '../../assets/scss/components/retainer';
+
+.resource{
+
+  @include retainer(60%, 100%){
+    text-align: center;
+    border: 1px solid #ccc;
+    border-top: none;
+    color: #FC4C02;
+  };
+
+}
+

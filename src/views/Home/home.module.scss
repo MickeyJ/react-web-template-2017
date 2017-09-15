@@ -1,0 +1,22 @@
+@import '../../assets/scss/components/retainer';
+
+.container{
+
+  @include retainer(60%, 100%){
+    text-align: center;
+    border: 1px solid #ccc;
+    border-top: none;
+    color: #0C2340;
+  };
+
+}
+
+.link{
+  color: RoyalBlue;
+  transition: color 0.25s;
+
+  &:hover{
+    color: #6ab9ff;
+  }
+
+}

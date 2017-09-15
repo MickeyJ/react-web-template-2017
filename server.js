@@ -4,7 +4,6 @@ const serveStatic = require('serve-static');
 const morgan = require('morgan');
 const cors = require('cors');
 const compression = require('compression');
-
 const config = require('./config');
 
 const app = express();
@@ -12,13 +11,12 @@ const app = express();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(compression());
-
-// app.use(favicon(__dirname + '/public/favicon.ico'));
-
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(serveStatic(config.PATH.public, {
   lastModified: true,
   etag: false,
   maxAge: '1d',
+  redirect: false,
   setHeaders: setCustomCacheControl
 }));
 

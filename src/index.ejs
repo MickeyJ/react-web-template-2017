@@ -5,12 +5,35 @@
         <meta name="HandheldFriendly" content="true" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title><%= htmlWebpackPlugin.options.title %></title>
+        <style type="text/css">
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: sans-serif;
+                height: 100vh;
+            }
+            .App {
+                text-align: center;
+                vertical-align: middle;
+                height: 100vh;
+            }
+            .App-intro {
+                margin-top: 40vh;
+                font-size: large;
+            }
+        </style>
     </head>
     <body>
         <noscript>
             You need to enable JavaScript to run this app.
         </noscript>
-        <div id="root"></div>
+        <div id="root">
+            <div class="App">
+                <p class="App-intro">
+                    Loading application...
+                </p>
+            </div>
+        </div>
         <%=htmlWebpackPlugin.files.webpackManifest%>
 
     </body>

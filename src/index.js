@@ -1,16 +1,15 @@
+import './utils/checkMobile'
+import './assets/to_import'
+
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader';
 import { configureStore } from './redux/store/configureStore';
 import registerServiceWorker from './utils/register_service_worker';
 
-import './assets/scss/index.scss'
-
 import Root from './core/Root/Root'
 
 const store = configureStore();
-
-console.time('load-app');
 
 render(
   <AppContainer>

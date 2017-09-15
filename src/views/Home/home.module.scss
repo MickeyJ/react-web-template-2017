@@ -1,0 +1,13 @@
+@import '../../assets/scss/components/retainer';
+
+.home{
+
+  @include retainer(60%, 100%){
+    text-align: center;
+    border: 1px solid #ccc;
+    border-top: none;
+    color: #0C2340;
+  };
+
+}
+

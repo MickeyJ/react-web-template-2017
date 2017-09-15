@@ -1,12 +1,37 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Routes from './routes';
+import connect from '../../utils/route_connect'
 
-// Could be connected to redux if needed
+import {
+  setWindowSize,
+} from '../../redux/actions'
 
-const Main = () => (
-  <main id="main-container">
-    { Routes }
-  </main>
-);
+class Main extends Component{
 
-export default Main
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.props.setWindowSize();
+  };
+
+  render(){
+    return (
+      <main id="main-container">
+        { Routes }
+      </main>
+    )
+  }
+}
+
+export default connect(
+  null,
+  {
+    setWindowSize,
+  }
+)(Main)

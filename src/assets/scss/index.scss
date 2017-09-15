@@ -1,12 +1,10 @@
 
-@import 'variables/font';
-@import 'variables/color';
-@import 'mixins/general';
-@import 'mixins/media';
+@import 'variables/index';
+@import 'mixins/index';
 @import 'components/index';
 
 @import 'reset';
 
-#root-container{
-  padding: 5px;
+#main-container{
+  padding: $_general-padding;;
 }

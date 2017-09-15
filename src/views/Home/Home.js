@@ -1,10 +1,11 @@
+import style from './home.module.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Home = () => (
-  <div id="home-container">
+  <div id="home-container" className={style.home}>
 
-    <header className="retainer-sm">
+    <header>
 
       <h3>Homie Page</h3>
 

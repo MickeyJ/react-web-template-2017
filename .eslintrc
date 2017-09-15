@@ -30,6 +30,7 @@
   "rules": {
     "indent": ["warn", 2, { "SwitchCase": 1 }],
     "no-console": "off",
+    "no-useless-escape": "off",
     "no-unused-vars": ["warn", { "ignoreModules": true }],
     "no-case-declarations": "off",
     "react/jsx-uses-react": "error",

@@ -1,12 +1,13 @@
 import React from 'react'
 import Bundle from '../../../utils/Bundle'
 
-import loadHome from 'bundle-loader?lazy&name=[name]!../../../components/Home'
-import loadResource from 'bundle-loader?lazy&name=[name]!../../../components/Resource'
-import loadNotFound from 'bundle-loader?lazy&name=[name]!../../../components/NotFound'
+import loadHome from 'bundle-loader?lazy&name=[name]!../../../views/Home/Home'
+import loadHomeMobile from 'bundle-loader?lazy&name=[name]!../../../views/Home/Home.Mobile'
+import loadResource from 'bundle-loader?lazy&name=[name]!../../../views/Resource/Resource'
+import loadNotFound from 'bundle-loader?lazy&name=[name]!../../../views/NotFound'
 
 export const Home = (props) => (
-  <Bundle load={loadHome}>
+  <Bundle load={window.checkMobile() ? loadHomeMobile : loadHome}>
     {(Home) => <Home {...props}/>}
   </Bundle>
 );

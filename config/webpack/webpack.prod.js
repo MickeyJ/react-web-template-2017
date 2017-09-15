@@ -69,11 +69,27 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: /\.module\.scss$/,
         use: appStyle.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'postcss-loader', 'sass-loader'],
           allChunks: true,
         })
+      },
+      {
+        test: /\.module\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            }
+          },
+          'postcss-loader',
+          'sass-loader',
+        ]
       },
       {
         test: /\.css$/,
@@ -111,6 +127,7 @@ module.exports = {
     }),
     vendorStyle,
     appStyle,
+    new ManifestJsonPlugin(manifest),
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
@@ -121,7 +138,6 @@ module.exports = {
       manifestVariable: 'webpackManifest',
       dropAsset: true,
     }),
-    new ManifestJsonPlugin(manifest),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),

@@ -82,10 +82,27 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: /\.module\.scss$/,
         use: [{
           loader: "style-loader"
         }, {
-          loader: "css-loader"
+          loader: "css-loader",
+        }, {
+          loader: "postcss-loader"
+        }, {
+          loader: "sass-loader"
+        }]
+      },
+      {
+        test: /\.module\.scss$/,
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader",
+          options: {
+            modules: true,
+            localIdentName: '[name]__[local]___[hash:base64:5]'
+          }
         }, {
           loader: "postcss-loader"
         }, {
@@ -97,7 +114,11 @@ module.exports = {
         use: [{
           loader: "style-loader"
         }, {
-          loader: "css-loader"
+          loader: "css-loader",
+          options: {
+            modules: true,
+            localIdentName: '[name]__[local]___[hash:base64:5]'
+          }
         }]
       },
     ]

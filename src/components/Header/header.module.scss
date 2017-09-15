@@ -1,0 +1,15 @@
+@import '../../assets/scss/variables/sizes';
+@import '../../assets/scss/mixins/general';
+
+.header{
+  width: 100%;
+  height: $_header-height;
+  line-height: $_header-height;
+  border-bottom: 1px solid #ccc;
+  padding: $_general-padding;
+
+  h1{
+    @include resetMP;
+  }
+
+}

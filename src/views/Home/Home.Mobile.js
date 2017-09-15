@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const HomeMobile = () => (
-  <div id="home-container" className={style.container}>
+  <div className={style.container}>
 
     <h3>Homie Page</h3>
 

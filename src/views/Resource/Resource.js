@@ -5,19 +5,15 @@ import { Link } from 'react-router-dom'
 import AuthHOC from '../../containers/AuthHOC'
 
 const Resource = () => (
-  <div id="resource-container" className={style.resource}>
+  <div className={style.resource}>
 
-    <header>
+    <h3>Super Special Secret Data</h3>
 
-      <h3>Super Special Secret Data</h3>
+    <br />
 
-      <br />
-
-      <Link to="/">
-        Home
-      </Link>
-
-    </header>
+    <Link to="/">
+      Home
+    </Link>
 
   </div>
 );

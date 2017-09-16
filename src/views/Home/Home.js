@@ -13,6 +13,9 @@ const Home = () => (
       Resource
     </Link>
 
+    <br />
+    <br />
+
   </div>
 );
 

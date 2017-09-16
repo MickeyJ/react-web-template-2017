@@ -1,0 +1,92 @@
+@import '../../assets/scss/components/retainer';
+
+
+/*
+  Modal Header
+  =-=-=-=-=-=-
+*/
+.header {
+  padding: 2px 16px;
+  background-color: #006F46;
+  color: white;
+  border-radius: 2px 2px 0 0;
+}
+
+
+/*
+  Close Button
+  =-=-=-=-=-=-
+*/
+.close_button {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  color: #424242;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+  &:hover {
+    color: #e72c2c;
+  }
+}
+
+
+/*
+  Modal Container Style And Animation
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+.modal {
+  @include retainer(40%, 100%){
+    text-align: center;
+    border: 1px solid #ccc;
+    border-top: none;
+    color: #0C2340;
+  };
+  background-color: #fefefe;
+  margin-top: 2vh;
+  border: 1px solid #888;
+  border-radius: 3px;
+  position: relative;
+  padding: 0;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation: animateTop;
+  animation-duration: 0.4s;
+}
+
+@keyframes animateTop {
+  from {
+    top: -300px;
+  }
+  to {
+    top: 0;
+  }
+}
+
+
+/*
+  Modal Background Overlay
+  =-=-=-=-=-=-=-=-=-=-=-=-
+*/
+.background_overlay {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  animation-name: fadein;
+  animation-duration: 0.4s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

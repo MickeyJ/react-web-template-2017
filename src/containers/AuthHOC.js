@@ -24,7 +24,7 @@ export default function(ResourceComponent){
 
   // Would be connected to redux state.
   AuthHOC.defaultProps = {
-    authorized: false,
+    authorized: true,
   };
 
   return withRouter(AuthHOC)

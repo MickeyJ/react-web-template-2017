@@ -1,0 +1,262 @@
+
+@lost gutter 1px;
+
+$sm-padding: 3px;
+$md-padding: 8px;
+$lg-padding: $md-padding + $sm-padding;
+$hg-padding: $lg-padding * 1.6;
+
+.container {
+  width: 100%;
+}
+
+
+/*
+  Fixed Header Style
+  =-=-=-=-=-=-=-=-=-
+*/
+
+$header_height: 40px;
+
+.header {
+  lost-center: 100%;
+  height: $header_height;
+  border-bottom: 1px solid black;
+}
+
+.search_brand {
+  position: relative;
+  lost-column: 3/4;
+  height: 100%;
+  background: #ececec;
+
+  input {
+    font-size: large;
+    font-family: inherit;
+    padding: $sm-padding 25px $sm-padding $lg-padding;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-right: 1px solid #333;
+    border-radius: 0;
+    background: none;
+    transition: background 0.2s;
+    &:focus{
+      background: white;
+    }
+  }
+
+  span{
+    display: block;
+    position: absolute;
+    top: 3px;
+    right: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    color: black;
+    transition: color 0.2s;
+
+    &:hover {
+      color: FireBrick;
+    }
+  }
+}
+
+.selection_total {
+  lost-column: 1/4;
+  height: 100%;
+  padding-right: $hg-padding;
+  line-height: $header_height;
+  font-size: large;
+  text-align: right;
+  background: #ffffff;
+  color: #D77000;
+  transition: all 0.2s;
+}
+
+
+/*
+  Inner Scroll Style
+  =-=-=-=-=-=-=-=-=-
+*/
+.scroll_container {
+  height: 400px;
+  overflow: scroll;
+  padding-right: $md-padding;
+}
+
+
+/*
+  Brand Style
+  =-=-=-=-=-=
+*/
+.brand_container {
+  padding: 10px $md-padding;
+}
+
+.brand_header {
+  lost-center: 100%;
+  font-size: large;
+  text-align: left;
+  padding: $sm-padding;
+  border-bottom: 1px solid #333;
+}
+
+//.closed_icon{
+//  display: inline-block;
+//  transform: rotate(270deg);
+//}
+//
+//.opened_icon{
+//  display: inline-block;
+//  transform: rotate(90deg);
+//}
+
+.brand_name {
+  lost-column: 3/4;
+  color: #181818;
+}
+
+.brand_product_qty {
+  lost-column: 1/4;
+  color: #0E7EA0;
+  text-align: right;
+}
+
+
+/*
+  Product Style
+  =-=-=-=-=-=-=
+*/
+$product_space: 5px;
+
+.product_container {
+  lost-center: 100%;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+  background: inherit;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #feffef;
+  }
+
+  &:last-child{
+    border: 0 solid white;
+  }
+}
+
+.product_name {
+  lost-column: 6/8;
+  text-align: left;
+  color: #414141;
+  padding: $sm-padding * 3;
+}
+
+.product_checkbox {
+  lost-column: 1/8;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin: $sm-padding * 3;
+  margin-right: 10px !important;
+  border-radius: 50%;
+  border: 0 solid #CEA42F;
+  cursor: pointer;
+  color: white;
+  background: #E9EEEF;
+  text-align: center;
+  line-height: 22px;
+
+  &:hover {
+    border: 1px solid #CEA42F;
+  }
+
+}
+
+
+
+/*
+  Footer/Error Style
+  =-=-=-=-=-=-=-=-=-=-
+*/
+
+$footer_padding: 1px;
+$min_footer_height: 45px;
+$min_error_height: $min_footer_height - ($footer_padding * 2);
+
+.footer{
+  lost-center: 100%;
+  min-height: $min_footer_height;
+  padding: 1px;
+}
+
+.done_button{
+  lost-column: 1/2;
+  min-height: $min_error_height;
+  padding: $md-padding;
+  border-radius: 3px;
+  color: white;
+  font-size: large;
+  cursor: pointer;
+  background: #0E7EA0;
+  transition: background 0.2s;
+
+  &:hover {
+    background: darken(#0E7EA0, 5%);
+  }
+
+  span{
+    display: block;
+    margin-top: 0.4%;
+  }
+}
+
+.clear_button{
+  lost-center: 100%;
+  lost-column: 1/2;
+  min-height: $min_error_height;
+  padding: $md-padding;
+  border-radius: 3px;
+  color: black;
+  font-size: large;
+  cursor: pointer;
+  background: #EFF2F3;
+  transition: background 0.2s;
+
+  &:hover {
+    background: darken(#EFF2F3, 5%);
+  }
+
+  span{
+    display: block;
+    margin-top: 0.4%;
+  }
+}
+
+
+.error_message{
+  lost-center: 100%;
+  min-height: $min_error_height;
+  padding: $md-padding;
+  border-radius: 3px;
+  background: FireBrick;
+  color: white;
+  font-size: small;
+  animation: fadeDown;
+  animation-duration: 0.2s;
+
+  span{
+    display: block;
+    margin-top: 0.7%;
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

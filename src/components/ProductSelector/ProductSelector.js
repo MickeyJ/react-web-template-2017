@@ -1,9 +1,11 @@
 import style from './product_selector.module.scss'
 import React from 'react'
 import PropTypes from 'prop-types'
+import filterListIcon from '../../assets/images/filter_list.png'
 
 const REGEXP_SEARCH_OPTION = '^';
 const BRAND_FILTER_KEY = 'brand_name';
+const PRODUCT_FILTER_KEY = 'product_name';
 const SELECTED_FILTER_KEY = 'selected';
 
 class ProductSelector extends React.Component{
@@ -13,8 +15,27 @@ class ProductSelector extends React.Component{
       filters: {
         [BRAND_FILTER_KEY]: '',
         [SELECTED_FILTER_KEY]: false,
-      }
-    }
+      },
+      selectInteractionStyle: {}
+    };
+
+    this.selectColorTimeout = setTimeout(() => {}, 0);
+  }
+
+  componentWillUnmount(){
+    clearTimeout(this.selectColorTimeout)
+  }
+
+  get hasReachedLimit(){
+    const {
+      selectionTotal,
+      selectionLimit,
+    } = this.props;
+    return +selectionTotal === +selectionLimit;
+  }
+
+  getSelectedProducts(products){
+    return products.filter(({ selected }) => selected)
   }
 
   /**
@@ -28,7 +49,7 @@ class ProductSelector extends React.Component{
       filters: {
         ...filters,
         [key]: value
-      }
+      },
     })
   }
 
@@ -36,13 +57,16 @@ class ProductSelector extends React.Component{
    * Test(RegExp) Filter Value
    * @param key     : String
    * @param subject : Object
+   * @param subjectKey : String | null
+   * @param searchOption : String | null
    * @returns {boolean}
    */
-  testFilterValue(key, subject){
+  testFilterValue(key, subject, subjectKey=null, searchOption=REGEXP_SEARCH_OPTION){
     const { filters } = this.state;
-    const searchPattern = new RegExp(REGEXP_SEARCH_OPTION + filters[key], 'i');
-    return searchPattern.test(subject[key])
+    const searchPattern = new RegExp(searchOption + filters[key], 'i');
+    return searchPattern.test(subject[subjectKey || key])
   }
+
 
   /**
    * Run Data Through Filters
@@ -53,13 +77,85 @@ class ProductSelector extends React.Component{
     const { filters } = this.state;
     let brandDataProcessed = brandData;
 
+    if(filters[SELECTED_FILTER_KEY]){
+      brandDataProcessed = brandDataProcessed.filter(
+        ({ products }) => this.getSelectedProducts(products).length
+      ).map(brand => ({
+        ...brand,
+        products: this.getSelectedProducts(brand.products)
+      }))
+    }
+
     if(filters[BRAND_FILTER_KEY]){
-      brandDataProcessed = brandDataProcessed.filter(brand => {
-        return this.testFilterValue(BRAND_FILTER_KEY, brand)
-      })
+      brandDataProcessed = brandDataProcessed.filter(
+        brand => {
+
+          const brandNameMatch = this.testFilterValue(
+            BRAND_FILTER_KEY,
+            brand,
+          );
+
+          const productNameMatch = brand.products.filter(product => {
+            return this.testFilterValue(
+              BRAND_FILTER_KEY,
+              product,
+              PRODUCT_FILTER_KEY,
+              ''
+            );
+          }).length;
+
+          return brandNameMatch || productNameMatch
+        }
+      )
     }
 
     return brandDataProcessed;
+  }
+
+
+  /**
+   * Set Interaction Style
+   * @param product_id : Number
+   * @param color      : String
+   */
+  setSelectInteractionStyle(product_id, color){
+    this.setState({
+      selectInteractionStyle: {
+        [product_id]: { background: color }
+      }
+    });
+    this.selectColorTimeout = setTimeout(() => {
+      this.setState({
+        selectInteractionStyle: {}
+      });
+    }, 200)
+  }
+
+  toggleSelectedFilter = () => {
+    const {
+      [SELECTED_FILTER_KEY]: shouldFilter,
+    } = this.state.filters;
+    this.setFilter(SELECTED_FILTER_KEY, !shouldFilter)
+  };
+
+  /**
+   * Handle Product Selection
+   * @param product_id : Number
+   * @param isSelected : Boolean
+   */
+  handleSelectProduct(product_id, isSelected){
+    const { onProductSelect } = this.props;
+
+    if(isSelected){
+      onProductSelect(product_id);
+      return;
+    }
+    if(this.hasReachedLimit){
+      this.setSelectInteractionStyle(product_id, 'rgba(224, 43, 43, 0.35)');
+      return;
+    }
+    onProductSelect(product_id);
+    this.setSelectInteractionStyle(product_id, 'rgba(132, 224, 144, 0.47)');
   }
 
   /**
@@ -72,7 +168,7 @@ class ProductSelector extends React.Component{
       <div className={style.search_brand} >
         <input
           type="text"
-          placeholder="Search Brand Name"
+          placeholder="Search Brand/Product Name"
           value={filters[BRAND_FILTER_KEY]}
           onChange={({ target: { value } }) =>
             this.setFilter(BRAND_FILTER_KEY, value)
@@ -90,6 +186,21 @@ class ProductSelector extends React.Component{
     )
   }
 
+  renderSelectionFilter(){
+
+    const optionOnStyle = (
+      this.state.filters[SELECTED_FILTER_KEY]
+        ? { background: '#feffef' }
+        : {}
+    );
+
+    return (
+      <div className={style.selected_filter} style={optionOnStyle} onClick={this.toggleSelectedFilter}>
+        <img src={filterListIcon} alt="I" />
+      </div>
+    )
+  }
+
   /**
    * Selection Total
    * @returns {XML}
@@ -101,13 +212,20 @@ class ProductSelector extends React.Component{
     } = this.props;
 
     const reachedLimitStyle = (
-      +selectionTotal === +selectionLimit ? {
+      this.hasReachedLimit ? {
         color: 'FireBrick',
       } : {}
     );
+
+    const selectionTotalText = (
+      this.hasReachedLimit
+        ? `${selectionTotal}/${selectionLimit}`
+        : selectionTotal
+    );
+
     return(
       <div className={style.selection_total} style={reachedLimitStyle}>
-        { selectionTotal ? `${selectionTotal}/${selectionLimit}` : '' }
+        { selectionTotal ? selectionTotalText : '' }
       </div>
     )
   }
@@ -124,7 +242,7 @@ class ProductSelector extends React.Component{
         products,
       } = brand;
 
-      const brandProductQty = products.filter(({selected}) => selected).length;
+      const brandProductQty = this.getSelectedProducts(products).length;
 
       return (
         <div key={brand_name + idx} className={style.brand_container}>
@@ -149,6 +267,9 @@ class ProductSelector extends React.Component{
    * @returns {Array<XML>}
    */
   renderBrandProducts(productData){
+    const {
+      selectInteractionStyle
+    } = this.state;
     return productData.map((product, idx) => {
 
       const {
@@ -157,7 +278,7 @@ class ProductSelector extends React.Component{
         selected,
       } = product;
 
-      const selectStatusCheckStyle = (
+      const selectStatusCheckStyle =  (
         selected
           ? {
             background: '#F7CD57',
@@ -176,8 +297,8 @@ class ProductSelector extends React.Component{
         <div
           key={product_name + idx}
           className={style.product_container}
-          style={selectStatusRowStyle}
-          onClick={() => this.props.onProductSelect(product_id)}
+          style={selectInteractionStyle[product_id] || selectStatusRowStyle}
+          onClick={() => this.handleSelectProduct(product_id, selected)}
         >
           <div
             className={style.product_checkbox}
@@ -226,6 +347,7 @@ class ProductSelector extends React.Component{
       <div className={style.container}>
         <header className={style.header}>
           {this.renderSearchInput()}
+          {this.renderSelectionFilter()}
           {this.renderSelectionTotal()}
         </header>
         <section className={style.scroll_container}>

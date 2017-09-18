@@ -14,14 +14,19 @@ import {
 import LDModal from '../../components/LDModal/LDModal'
 import ProductSelector from '../../components/ProductSelector/ProductSelector'
 
-const selectionLimit = 4;
+const selectionLimit = 5;
 
 class Resource extends React.Component{
   constructor(){
     super();
     this.state = {
-      modalOpen: false,
-      selectedProducts: {},
+      modalOpen: true,
+      selectedProducts: {
+        10: { product_id: 10 },
+        11: { product_id: 11 },
+        15: { product_id: 15 },
+        17: { product_id: 17 },
+      },
     }
   }
 
@@ -49,13 +54,12 @@ class Resource extends React.Component{
     const productIsAlreadySelected = !!selectedProducts[product_id];
     if(productIsAlreadySelected) {
       return _.omit(selectedProducts, product_id);
-    } else if(this.selectionTotal < selectionLimit) {
+    } else {
       return {
         ...selectedProducts,
         [product_id]: PRODUCTS[product_id]
       }
     }
-    return null;
   }
 
   clearSelection(){

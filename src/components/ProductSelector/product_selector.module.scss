@@ -1,5 +1,5 @@
 
-@lost gutter 1px;
+@lost gutter 0;
 
 $sm-padding: 3px;
 $md-padding: 8px;
@@ -26,9 +26,11 @@ $header_height: 40px;
 
 .search_brand {
   position: relative;
-  lost-column: 3/4;
+  //lost-column: 3/4;
+  //lost-column: 6/8;
+  lost-column: 12/16;
   height: 100%;
-  background: #ececec;
+  background: #cfcfcf;
 
   input {
     font-size: large;
@@ -62,8 +64,31 @@ $header_height: 40px;
   }
 }
 
+.selected_filter{
+  lost-column: 1.3/16;
+  border-right: 1px solid #333;
+  height: 100%;
+  //line-height: $header_height;
+  padding-top: $md-padding;
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  background: #cfcfcf;
+  transition: background 0.2s;
+
+  &:hover{
+    background: white;
+  }
+
+  img{
+    height: $header_height / 1.8;
+  }
+}
+
 .selection_total {
-  lost-column: 1/4;
+  //lost-column: 1/4;
+  //lost-column: 2/8;
+  lost-column: 2.7/16;
   height: 100%;
   padding-right: $hg-padding;
   line-height: $header_height;
@@ -135,7 +160,7 @@ $product_space: 5px;
   cursor: pointer;
   border-bottom: 1px solid #ccc;
   background: inherit;
-  transition: background 0.2s;
+  transition: background 0.2s ease;
 
   &:hover {
     background: #feffef;
@@ -233,6 +258,7 @@ $min_error_height: $min_footer_height - ($footer_padding * 2);
     margin-top: 0.4%;
   }
 }
+
 
 
 .error_message{

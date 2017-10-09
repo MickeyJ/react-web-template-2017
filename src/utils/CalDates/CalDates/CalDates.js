@@ -120,7 +120,7 @@ export default class CalDates{
     const firstCurrentMonthDayNumber = parseDateNumber(this.date.day() + 1);
 
     const firstCalDayIndex = this.structure.findIndex(calDay => calDay.week_day_number === firstCurrentMonthDayNumber) + 1;
-    const previousCalDayIndex = this.months[CURR].numberOfDays + firstCalDayIndex;
+    const lastCalDayIndex = this.months[CURR].numberOfDays + firstCalDayIndex;
 
     let previousMonthDayIndex = this.months[PREV].numberOfDays - (firstCalDayIndex - 2);
     let currentMonthDayIndex = 1;
@@ -146,7 +146,7 @@ export default class CalDates{
       }
 
       // Current Month
-      else if(calDayIndex < previousCalDayIndex) {
+      else if(calDayIndex < lastCalDayIndex) {
         updatePosition(CURR, currentMonthDayIndex++);
       }
 

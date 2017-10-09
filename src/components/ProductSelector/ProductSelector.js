@@ -26,7 +26,7 @@ class ProductSelector extends React.Component{
     clearTimeout(this.selectColorTimeout)
   }
 
-  get hasReachedLimit(){
+  get hasReachedProductLimit(){
     const {
       selectionTotal,
       selectionLimit,
@@ -67,6 +67,29 @@ class ProductSelector extends React.Component{
     return searchPattern.test(subject[subjectKey || key])
   }
 
+  filterBrandSearch(brandData){
+    return brandData.filter(
+      brand => {
+
+        const brandNameMatch = this.testFilterValue(
+          BRAND_FILTER_KEY,
+          brand,
+        );
+
+        const productNameMatch = brand.products.filter(product => {
+          return this.testFilterValue(
+            BRAND_FILTER_KEY,
+            product,
+            PRODUCT_FILTER_KEY,
+            ''
+          );
+        }).length;
+
+        return brandNameMatch || productNameMatch
+      }
+    )
+  }
+
 
   /**
    * Run Data Through Filters
@@ -87,26 +110,7 @@ class ProductSelector extends React.Component{
     }
 
     if(filters[BRAND_FILTER_KEY]){
-      brandDataProcessed = brandDataProcessed.filter(
-        brand => {
-
-          const brandNameMatch = this.testFilterValue(
-            BRAND_FILTER_KEY,
-            brand,
-          );
-
-          const productNameMatch = brand.products.filter(product => {
-            return this.testFilterValue(
-              BRAND_FILTER_KEY,
-              product,
-              PRODUCT_FILTER_KEY,
-              ''
-            );
-          }).length;
-
-          return brandNameMatch || productNameMatch
-        }
-      )
+      brandDataProcessed = this.filterBrandSearch(brandDataProcessed)
     }
 
     return brandDataProcessed;
@@ -150,7 +154,7 @@ class ProductSelector extends React.Component{
       onProductSelect(product_id);
       return;
     }
-    if(this.hasReachedLimit){
+    if(this.hasReachedProductLimit){
       this.setSelectInteractionStyle(product_id, 'rgba(224, 43, 43, 0.35)');
       return;
     }
@@ -212,13 +216,13 @@ class ProductSelector extends React.Component{
     } = this.props;
 
     const reachedLimitStyle = (
-      this.hasReachedLimit ? {
+      this.hasReachedProductLimit ? {
         color: 'FireBrick',
       } : {}
     );
 
     const selectionTotalText = (
-      this.hasReachedLimit
+      this.hasReachedProductLimit
         ? `${selectionTotal}/${selectionLimit}`
         : selectionTotal
     );

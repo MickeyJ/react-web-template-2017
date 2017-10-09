@@ -78,18 +78,19 @@ module.exports = {
       },
       {
         test: /\.module\.scss$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]'
-            }
-          },
-          'postcss-loader',
-          'sass-loader',
-        ]
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader",
+          options: {
+            modules: true,
+            localIdentName: '[name]__[local]___[hash:base64:5]'
+          }
+        }, {
+          loader: "postcss-loader"
+        }, {
+          loader: "sass-loader"
+        }]
       },
       {
         test: /\.css$/,
@@ -106,33 +107,15 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: "runtime",
     }),
-    new NameAllModulesPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      sourceMap: true,
-      compress: {
-        warnings: false,
-        drop_console: true,
-        comparisons: false,
-      },
-      output: {
-        comments: false,
-        ascii_only: true,
-      },
-      mangle: {
-        except: ['webpackJsonp'],
-        screw_ie8 : true,
-        keep_fnames: true,
-      }
-    }),
     vendorStyle,
     appStyle,
+    new OptimizeCssAssetsPlugin(),
+    new NameAllModulesPlugin(),
+    new WebpackMd5Hash(),
     new ManifestJsonPlugin(manifest),
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
-    new OptimizeCssAssetsPlugin(),
-    new WebpackMd5Hash(),
     new InlineChunkManifestHtmlWebpackPlugin({
       filename: 'manifest.json',
       manifestVariable: 'webpackManifest',
@@ -167,6 +150,19 @@ module.exports = {
       staticFileGlobsIgnorePatterns: [/\.map$/, /\.html$/],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      comments: false,
+      compress: {
+        warnings: false,
+        drop_console: true
+      },
+      mangle: {
+        except: ['webpackJsonp'],
+        screw_ie8 : true,
+        keep_fnames: true,
+      }
+    }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       reportFilename: 'build_report.html',

@@ -54,9 +54,18 @@ const webpackDefaults = {
 
 module.exports = webpackDefaults;
 
-function isExternal({ context }) {
+function isExternal(module) {
+
+  const {
+    context,
+  } = module;
+
   if (typeof context !== 'string') {
     return false;
   }
-  return context.indexOf('node_modules') !== -1;
+
+  const isNodeModule = context.indexOf('node_modules') > -1;
+  const isLoader = context.indexOf('-loader') > -1;
+
+  return isNodeModule && !isLoader;
 }

@@ -7,15 +7,25 @@ import DevTools from '../../components/DevTools';
 
 export const history = createHistory();
 
+let enhancer;
+
+if(window.checkMobile()){
+  enhancer = compose(
+    applyMiddleware(apiMiddleware)
+  );
+} else {
+  enhancer = compose(
+    applyMiddleware(apiMiddleware),
+    DevTools.instrument()
+  );
+}
+
 export function configureStore(initialState) {
 
   const store = createStore(
     rootReducer,
     initialState,
-    compose(
-      applyMiddleware(apiMiddleware),
-      DevTools.instrument()
-    )
+    enhancer
   );
 
   if (module.hot) {

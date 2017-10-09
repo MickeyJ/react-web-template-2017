@@ -8,8 +8,9 @@
   border-bottom: 1px solid #ccc;
   padding: $_general-padding;
 
-  h1{
+  .title{
     @include resetMP;
+    color: RoyalBlue;
   }
 
 }

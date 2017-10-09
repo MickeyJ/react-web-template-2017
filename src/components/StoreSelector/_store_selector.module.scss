@@ -1,0 +1,93 @@
+@import '../../assets/scss/variables/color-2';
+@import '../../assets/scss/components/retainer';
+
+$selected-store-item-height      : 44px;
+$store-search-height             : $selected-store-item-height;
+$store-font-size                 : 18px;
+$icon-padding                    : 4px;
+$icon-size                       : $selected-store-item-height - $icon-padding;
+$delete-icon                     : url('../../assets/icons/x-dark.png');
+$lateral-padding                 : 5px;
+
+.container{
+  width: 100%;
+  overflow: scroll;
+  position: relative;
+}
+
+.store_search_container{
+  width: 99.5%;
+  @include retainer(40%, 99.5%);
+  height: $store-search-height;
+  position: fixed;
+  text-align: left;
+  z-index: 1;
+}
+
+.selected_stores_container{
+  width: 100%;
+  padding-top: $store-search-height;
+}
+
+.selected_store_item{
+  height: $selected-store-item-height;
+  border-bottom: 1px solid #e9e9e9;
+
+  &:nth-child(odd){
+    background: lighten($grey-lightest, 3%);
+  }
+  &:last-child{
+    border-bottom: none;
+  }
+}
+
+.selected_store_item_active{
+  background: #feffef !important;
+}
+
+.store_item_name{
+  lost-column: 7/8;
+  height: inherit;
+  padding: 10px 0 10px $lateral-padding;
+  line-height: $selected-store-item-height / 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+
+  span {
+    width: 100%;
+    font-size: $store-font-size;
+    color: #7a7a7a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+}
+
+
+.store_item_icon{
+  lost-column: 1/8;
+  height: inherit;
+  position: relative;
+  padding: ($icon-padding / 2);
+}
+
+
+@mixin action-icon($size, $url){
+  lost-center: 100%;
+  cursor: pointer;
+  height: $size;
+  width: $size;
+  background: $url left center no-repeat;
+  background-size: $size / 2;
+  transition: background 0.2s;
+}
+
+.delete_icon {
+  @include action-icon($icon-size, $delete-icon);
+}
+
+:local(.Select-control){
+  line-height: $store-search-height / 2 !important;
+}

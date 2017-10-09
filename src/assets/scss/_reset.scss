@@ -37,3 +37,24 @@ $header_sizes: (1: 1.5%, 2: 1.25%, 3: 1%, 4: 0.75%, 5: 0.5%, 6: 0.25%);
     @include pad-vert($p);
   }
 }
+
+.Select-placeholder{
+  height: inherit !important;
+  line-height: 44px / 2 !important;
+  padding-top: 5px !important;
+}
+
+.Select{
+  height: inherit !important;
+  line-height: 44px / 2 !important;
+}
+
+.Select-control{
+  height: inherit !important;
+  line-height: 44px / 2 !important;
+
+  input{
+    height: inherit !important;
+    line-height: 44px !important;
+  }
+}

@@ -117,7 +117,8 @@ class Resource extends React.Component{
 
 function formatProductSelections(brands, products, selection){
   return _
-    .valuesIn(brands)
+    .chain(brands)
+    .valuesIn()
     .map(b => ({
       ...b,
       products: _
@@ -128,6 +129,8 @@ function formatProductSelections(brands, products, selection){
           selected: !!selection[p.product_id],
         }))
     }))
+    .orderBy(['brand_name'], ['asc'])
+    .value();
 }
 
 export default AuthHOC(Resource)

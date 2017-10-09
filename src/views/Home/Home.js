@@ -13,6 +13,18 @@ const Home = () => (
       Resource
     </Link>
 
+    <span> - </span>
+
+    <Link to="/stores" className={style.link}>
+      Stores
+    </Link>
+
+    <span> - </span>
+
+    <Link to="/calendar" className={style.link}>
+      Calendar
+    </Link>
+
     <br />
     <br />
 

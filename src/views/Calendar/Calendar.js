@@ -44,7 +44,7 @@ const Calendar = () => {
     )
   };
 
-  const renderDay = (day, dayKey) => {
+  const renderWeekDay = (day, dayKey) => {
     const {
       events,
       info: {
@@ -76,11 +76,11 @@ const Calendar = () => {
   };
 
   const renderWeek = (calendarWeek) =>{
-    return calendarWeek.map(renderDay)
+    return calendarWeek.map(renderWeekDay)
   };
 
   const renderMonth = (calendarMonth) =>{
-    return calendarMonth.map(renderDay)
+    return calendarMonth.map(renderWeekDay)
   };
 
 

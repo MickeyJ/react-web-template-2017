@@ -199,7 +199,7 @@ export function formatWeekDays(){
   return _
     .chain(weekDays)
     .valuesIn()
-    // .orderBy(['order'], ['asc'])
+    .orderBy(['order'], ['asc'])
     .value();
 }
 

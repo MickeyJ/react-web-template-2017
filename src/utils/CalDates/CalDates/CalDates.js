@@ -85,6 +85,30 @@ export default class CalDates{
       .value();
   }
 
+  get calendarWeeks(){
+    const weeks = [];
+    let week = [];
+    let weekDayIndex = 0;
+
+    // const calendarCopy = this.calendarList;
+
+    this.calendarList.forEach((day) => {
+
+      if(weekDayIndex === 7){
+        weekDayIndex = 0;
+        weeks.push(week);
+        week = [];
+      }
+
+      week.push(day);
+
+      weekDayIndex++;
+    });
+
+
+    return weeks;
+  }
+
   _getDayString(month_type, day){
     return `${this.year}-${parseDateNumber(this.months[month_type].number)}-${parseDateNumber(day)}`;
   }
@@ -179,13 +203,13 @@ export function formatWeekDays(){
     .value();
 }
 
-function generateCalStructure(calendarDays){
+function generateCalStructure(daysInCalendar){
   const result = [];
   const weekDayList = formatWeekDays();
 
   let week_days = [...weekDayList];
 
-  for(let d = 1; d <= calendarDays; d++){
+  for(let d = 1; d <= daysInCalendar; d++){
     if(!week_days.length) week_days = [...weekDayList];
     const weekDay = week_days.shift();
     delete weekDay.order;

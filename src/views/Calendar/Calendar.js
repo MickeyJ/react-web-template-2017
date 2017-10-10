@@ -18,6 +18,7 @@ const {
   year,
   weekDays,
   calendarList,
+  calendarWeeks,
   currentMonth: {
     info: {
       name_long: month_name
@@ -27,74 +28,87 @@ const {
 
 addEventsToCalendar(calendarList, dummy_data);
 
-const Calendar = () => (
-  <div className={style.container}>
+const Calendar = () => {
 
-    <h3>
-      {month_name}, {year}
-    </h3>
-
-    {/*<Link to="/" className={style.link}>*/}
-    {/*Home*/}
-    {/*</Link>*/}
-
-    <div className={style.cal_container}>
-
-      {weekDays.map(weekDay => (
-        <div key={weekDay.week_day_number} className={style.week_day_header}>
-          {weekDay.name_short}
+  const renderEvent = (event, eventIdx) =>{
+    if(event){
+      return (
+        <div key={`${event.title}-${eventIdx}`} className={style.event} style={{ background: shc.convert(event.title) }}>
+          {event.status.start || event.status.end ? `• ${event.title}` : ''}
         </div>
-      ))}
+      )
+    }
+    return (
+      <div key={`no-event-${eventIdx}`} className={style.event}>
+      </div>
+    )
+  };
 
-      {calendarList.map((day, idx) => {
+  const renderDay = (day, dayKey) => {
+    const {
+      events,
+      info: {
+        // cal_day_index,
+        // name_short,
+        month_day_index,
+        month: {
+          name_short: month_short,
+          type: month_type,
+        },
+      }
+    } = day;
 
-        const {
-          events,
-          info: {
-            month_day_index,
-            month: {
-              name_short: month_short,
-              type: month_type,
-            },
-          }
-        } = day;
+    let dayStyle = style.day;
 
-        let dayStyle = style.day;
+    if(month_type === 'CURR'){
+      dayStyle += ` ${style.current_month}`
+    }
 
-        if(month_type === 'CURR'){
-          dayStyle += ` ${style.current_month}`
-        }
+    return (
+      <div key={dayKey} className={dayStyle}>
+        <div className={style.month_day_number}>
+          {month_day_index === 1 ? `${month_short} ${month_day_index}` : month_day_index}
+        </div>
 
-        return (
-          <div key={idx} className={dayStyle}>
+        {events.map(renderEvent)}
+      </div>
+    )
+  };
 
-            <div className={style.month_day_number}>
-              {month_day_index === 1 ? `${month_short} ${month_day_index}` : month_day_index}
-            </div>
+  const renderWeek = (calendarWeek) =>{
+    return calendarWeek.map(renderDay)
+  };
 
-            {events.map((event, eventIdx) => {
+  const renderMonth = (calendarMonth) =>{
+    return calendarMonth.map(renderDay)
+  };
 
-              if(event){
-                return (
-                  <div key={`${event.title}-${idx}-${eventIdx}`} className={style.event} style={{ background: shc.convert(event.title) }}>
-                    {event.status.start || event.status.end ? `• ${event.title}` : ''}
-                  </div>
-                )
-              }
 
-              return (
-                <div key={`no-event-${idx}-${eventIdx}`} className={style.event}>
+  return (
+    <div className={style.container}>
 
-                </div>
-              )
-            })}
+      <h3>
+        {month_name}, {year}
+      </h3>
 
+      <Link to="/" className={style.link}>
+        Home
+      </Link>
+
+      <div className={style.cal_container}>
+
+        {weekDays.map(weekDay => (
+          <div key={weekDay.week_day_number} className={style.week_day_header}>
+            {weekDay.name_short}
           </div>
-        )
-      })}
-    </div>
+        ))}
 
-  </div>
-);
+        {renderMonth(calendarList)}
+        {/*{renderWeek(calendarWeeks[0])}*/}
+      </div>
+
+    </div>
+  )
+};
 
 export default Calendar
